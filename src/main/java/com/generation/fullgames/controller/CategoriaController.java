@@ -1,4 +1,3 @@
-
 package com.generation.fullgames.controller;
 
 import java.util.List;
@@ -19,46 +18,44 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.generation.fullgames.model.Produto;
-import com.generation.fullgames.repository.ProdutoRepository;
-
-
+import com.generation.fullgames.model.Categoria;
+import com.generation.fullgames.repository.CategoriaRepository;
 
 @RestController
-@RequestMapping("/Produto")
+@RequestMapping("/Categoria")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-public class ProdutoController {
+public class CategoriaController {
 
 	@Autowired
-	private ProdutoRepository produtoRepository;
+	private CategoriaRepository categoriaRepository;
 
 	@GetMapping
-	public ResponseEntity<List<Produto>> getAll() {
-		return ResponseEntity.ok(produtoRepository.findAll());
+	public ResponseEntity<List<Categoria>> getAll() {
+		return ResponseEntity.ok(categoriaRepository.findAll());
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Produto> getById(@PathVariable Long id) {
-		return produtoRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
+	public ResponseEntity<Categoria> getById(@PathVariable Long id) {
+		return categoriaRepository.findById(id).map(resposta -> ResponseEntity.ok(resposta))
 				.orElse(ResponseEntity.status(HttpStatus.NOT_FOUND).build());
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Produto>> getByNome(@PathVariable String nome) {
-		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
+	public ResponseEntity<List<Categoria>> getBytitulo(@PathVariable String nome) {
+		return ResponseEntity.ok(categoriaRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 
 	@PostMapping
-	public ResponseEntity<Produto> post(@RequestBody Produto produto) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(produtoRepository.save(produto));
+	public ResponseEntity<Categoria> post(@RequestBody Categoria categoria) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(categoriaRepository.save(categoria));
 	}
 
 	@PutMapping
-	public ResponseEntity<Produto> put(@RequestBody Produto produto) {
-		if (!produtoRepository.existsById(produto.getId())) {
+	public ResponseEntity<Categoria> put(@RequestBody Categoria categoria) {
+		if (!categoriaRepository.existsById(categoria.getId())) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		} else {
-			return ResponseEntity.status(HttpStatus.OK).body(produtoRepository.save(produto));
+			return ResponseEntity.status(HttpStatus.OK).body(categoriaRepository.save(categoria));
 		}
 	}
 
@@ -66,13 +63,10 @@ public class ProdutoController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Long id) {
 
-		Optional<Produto> produto = produtoRepository.findById(id);
-		if (produto.isEmpty()) {
+		Optional<Categoria> categoria = categoriaRepository.findById(id);
+		if (categoria.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 		}
-		produtoRepository.deleteById(id);
+		categoriaRepository.deleteById(id);
 	}
-	
-
-
 }

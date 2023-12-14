@@ -11,5 +11,8 @@ import com.generation.fullgames.model.Produto;
 public interface ProdutoRepository extends JpaRepository<Produto,Long>{
 
 	List<Produto> findAllByNomeContainingIgnoreCase(@Param("nome")String nome);
+	List<Produto> findByPrecoLessThan(@Param("preco")double preco);
+	List<Produto> findByPrecoGreaterThan(@Param("preco")double preco);
+
 
 }

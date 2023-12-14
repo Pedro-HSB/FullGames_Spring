@@ -74,5 +74,14 @@ public class ProdutoController {
 	}
 	
 
+	@GetMapping("/maiorpreco/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoBigger(@PathVariable double preco) {
+		return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThan(preco));
+	}
+	
+	@GetMapping("/menorpreco/{preco}")
+	public ResponseEntity<List<Produto>> getByPrecoLess (@PathVariable double preco) {
+		return ResponseEntity.ok(produtoRepository.findByPrecoLessThan(preco));
+	}
 
 }

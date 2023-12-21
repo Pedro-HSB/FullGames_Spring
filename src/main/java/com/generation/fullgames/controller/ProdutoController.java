@@ -21,13 +21,15 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.fullgames.model.Produto;
 import com.generation.fullgames.repository.ProdutoRepository;
-
-
+import com.generation.fullgames.service.ProdutoService;
 
 @RestController
-@RequestMapping("/Produto")
+@RequestMapping("/Produtos")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProdutoController {
+
+	@Autowired
+	private ProdutoService produtoService;
 
 	@Autowired
 	private ProdutoRepository produtoRepository;
@@ -72,16 +74,21 @@ public class ProdutoController {
 		}
 		produtoRepository.deleteById(id);
 	}
-	
 
 	@GetMapping("/maiorpreco/{preco}")
 	public ResponseEntity<List<Produto>> getByPrecoBigger(@PathVariable double preco) {
 		return ResponseEntity.ok(produtoRepository.findByPrecoGreaterThan(preco));
 	}
-	
+
 	@GetMapping("/menorpreco/{preco}")
-	public ResponseEntity<List<Produto>> getByPrecoLess (@PathVariable double preco) {
+	public ResponseEntity<List<Produto>> getByPrecoLess(@PathVariable double preco) {
 		return ResponseEntity.ok(produtoRepository.findByPrecoLessThan(preco));
+	}
+
+	@PutMapping("curtida/{id}")
+	public ResponseEntity<Produto> curtida(@PathVariable Long id) {
+		return produtoService.curtir(id).map(resposta -> ResponseEntity.ok(resposta))
+				.orElse(ResponseEntity.badRequest().build());
 	}
 
 }

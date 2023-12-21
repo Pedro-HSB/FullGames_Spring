@@ -21,7 +21,7 @@ import jakarta.validation.constraints.Size;
 
 
 @Entity
-@Table(name="categorias")
+@Table(name="tb_categorias")
 public class Categoria {
 
 	@Id

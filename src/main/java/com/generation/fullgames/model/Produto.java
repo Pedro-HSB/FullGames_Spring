@@ -11,14 +11,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name="produtos")
+@Table(name="tb_produtos")
 public class Produto {
 	
 	@Id
@@ -48,9 +47,16 @@ public class Produto {
 	@Column(length=100)
     private Integer estoque;
 	
+	@Column(length=100, columnDefinition = "INTEGER DEFAULT 0")
+    private Integer curtida;
+
 	@ManyToOne
     @JsonIgnoreProperties("produtos")
     private Categoria categoria;
+	
+	@ManyToOne
+    @JsonIgnoreProperties("produtos")
+    private Usuario usuario;
 	
 	public Long getId() {
 		return id;
@@ -99,6 +105,14 @@ public class Produto {
 	public void setEstoque(Integer estoque) {
 		this.estoque = estoque;
 	}
+	
+	public Integer getCurtida() {
+		return curtida;
+	}
+
+	public void setCurtida(Integer curtida) {
+		this.curtida = curtida;
+	}
 
 	public Categoria getCategoria() {
 		return categoria;
@@ -107,4 +121,13 @@ public class Produto {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 }

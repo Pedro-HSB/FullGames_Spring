@@ -19,10 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.generation.fullgames.model.Categoria;
+import com.generation.fullgames.model.Produto;
 import com.generation.fullgames.repository.CategoriaRepository;
 
 @RestController
-@RequestMapping("/Categoria")
+@RequestMapping("/Categorias")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CategoriaController {
 
@@ -41,8 +42,13 @@ public class CategoriaController {
 	}
 
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Categoria>> getBytitulo(@PathVariable String nome) {
+	public ResponseEntity<List<Categoria>> getByNome(@PathVariable String nome) {
 		return ResponseEntity.ok(categoriaRepository.findAllByNomeContainingIgnoreCase(nome));
+	}
+	
+	@GetMapping("/descricao/{descricao}")
+	public ResponseEntity<List<Categoria>> getByDescricao(@PathVariable String descricao) {
+		return ResponseEntity.ok(categoriaRepository.findAllByDescricaoContainingIgnoreCase(descricao));
 	}
 
 	@PostMapping
